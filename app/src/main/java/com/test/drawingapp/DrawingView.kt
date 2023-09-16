@@ -11,6 +11,7 @@ import android.view.MotionEvent
 import android.view.View
 
 class DrawingView(context :Context , attrs :AttributeSet) : View(context,attrs) {
+//    mdrawPath stores a traced path and is used to display it on screen
     private var mdrawPath : CustomPath? = null
     private var mcanvasBitmap : Bitmap? = null
     private var mdrawPaint : Paint? = null
@@ -18,6 +19,9 @@ class DrawingView(context :Context , attrs :AttributeSet) : View(context,attrs) 
     private var color :Int = Color.BLACK
     private var mbrushSize : Float = 0.toFloat()
     private var mcanvas : Canvas? = null
+
+//    mPaths stores all traced paths so that previous paths don't disappear on lifting finger from screen
+    private val mPaths = ArrayList<CustomPath>()
 
     init{
         setUpDrawing()
@@ -44,11 +48,18 @@ class DrawingView(context :Context , attrs :AttributeSet) : View(context,attrs) 
         mcanvas = Canvas(mcanvasBitmap!!)
     }
 
-//    fxn to implement drawing using drawpath
+//    fxn to implement drawing using drawPath
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas?.drawBitmap(mcanvasBitmap!!,0f,0f,mcanvasPaint)
 
+//    drawing all previous drawPaths stored in mPaths
+        for(path in mPaths){
+            mdrawPaint!!.strokeWidth = path.brushThickness
+            mdrawPath!!.color = path.color
+            canvas?.drawPath(path,mdrawPaint!!)
+        }
+//        drawing current path on screen
         if(!mdrawPath!!.isEmpty) {
 //            selecting custom color and stroke width
             mdrawPaint!!.strokeWidth = mdrawPath!!.brushThickness
@@ -83,7 +94,9 @@ class DrawingView(context :Context , attrs :AttributeSet) : View(context,attrs) 
                 }
             }
             MotionEvent.ACTION_UP ->{
-//                when finger is lifted , mdrawPath is updated (in case color or brush size is updated by user)
+//                when finger is lifted, mdrawPath is pushed to paths arraylist (so it can store all traced paths)
+//                when finger is lifted , mdrawPath is updated (as color or brush size is updated by user)
+                mPaths.add(mdrawPath!!)
                 mdrawPath = CustomPath(color,mbrushSize)
             }
             else -> {
