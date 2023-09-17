@@ -8,15 +8,30 @@
     tools:context=".MainActivity">
 
     <com.test.drawingapp.DrawingView
+        android:id="@+id/drawing_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/canvas_bg"
         android:layout_margin="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ib_brush"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
     </com.test.drawingapp.DrawingView>
+    
+    <ImageButton
+        android:id="@+id/ib_brush"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:src="@drawable/ic_brush"
+        android:scaleType="fitXY"
+        android:backgroundTint="#e5e5e5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/drawing_view"
+        android:contentDescription="@string/brush_selector_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,8 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
+import android.util.DisplayMetrics
+import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 
@@ -36,8 +38,6 @@ class DrawingView(context :Context , attrs :AttributeSet) : View(context,attrs) 
         mdrawPaint!!.strokeJoin = Paint.Join.ROUND
         mdrawPaint!!.strokeCap = Paint.Cap.ROUND
         mcanvasPaint = Paint(Paint.DITHER_FLAG)
-//        initializing brush size with 20.0
-        mbrushSize = 20.toFloat()
     }
 
 //    OnSizeChanged fxn is called to setup canvas when screen is displayed
@@ -56,7 +56,7 @@ class DrawingView(context :Context , attrs :AttributeSet) : View(context,attrs) 
 //    drawing all previous drawPaths stored in mPaths
         for(path in mPaths){
             mdrawPaint!!.strokeWidth = path.brushThickness
-            mdrawPath!!.color = path.color
+            mdrawPaint!!.color = path.color
             canvas?.drawPath(path,mdrawPaint!!)
         }
 //        drawing current path on screen
@@ -106,6 +106,12 @@ class DrawingView(context :Context , attrs :AttributeSet) : View(context,attrs) 
         }
         invalidate()
         return true
+    }
+
+//    this public fxn allows to set brush size for drawing
+    fun setBrushSize(size: Float){
+        mbrushSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,size, resources.displayMetrics)
+        mdrawPaint!!.strokeWidth = mbrushSize
     }
 //    this class allows to choose a custom color and brush thickness for brush path
     internal inner class CustomPath (var color : Int , var brushThickness : Float) : Path() {

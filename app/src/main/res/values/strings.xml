@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Drawing App</string>
+    <string name="brush_selector_icon">Brush Selector icon</string>
+    <string name="large_brush">Large brush</string>
+    <string name="medium_brush">Medium brush</string>
+    <string name="small_brush">Small brush</string>
+    <string name="extra_small_brush">extra small brush</string>
+    <string name="extra_large_brush">Extra large brush</string>
 </resources>
