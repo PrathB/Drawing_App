@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
-import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
@@ -15,11 +14,17 @@ import android.view.View
 class DrawingView(context :Context , attrs :AttributeSet) : View(context,attrs) {
 //    mdrawPath stores a traced path and is used to display it on screen
     private var mdrawPath : CustomPath? = null
+    // An instance of the Bitmap.
     private var mcanvasBitmap : Bitmap? = null
+//    The Paint class holds the style and color information about how to draw geometries, text and bitmaps.
     private var mdrawPaint : Paint? = null
+    // Instance of canvas paint view.
     private var mcanvasPaint : Paint? = null
+//    The Paint class holds the style and color information about how to draw geometries, text and bitmaps.
     private var color :Int = Color.BLACK
+//     A variable for stroke/brush size to draw on the canvas.
     private var mbrushSize : Float = 0.toFloat()
+
     private var mcanvas : Canvas? = null
 
 //    mPaths stores all traced paths so that previous paths don't disappear on lifting finger from screen
@@ -112,6 +117,12 @@ class DrawingView(context :Context , attrs :AttributeSet) : View(context,attrs) 
     fun setBrushSize(size: Float){
         mbrushSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,size, resources.displayMetrics)
         mdrawPaint!!.strokeWidth = mbrushSize
+    }
+
+//    This functions sets the color of a store to selected color and able to draw on view using that color.
+    fun setColor(newColor:String){
+        color = Color.parseColor(newColor)
+        mdrawPaint!!.color = color
     }
 //    this class allows to choose a custom color and brush thickness for brush path
     internal inner class CustomPath (var color : Int , var brushThickness : Float) : Path() {

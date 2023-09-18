@@ -6,4 +6,16 @@
     <string name="small_brush">Small brush</string>
     <string name="extra_small_brush">extra small brush</string>
     <string name="extra_large_brush">Extra large brush</string>
+    <string name="xsmall_brush">Extra small brush\n</string>
+    <string name="xlarge_brush">Extra large brush\n</string>
+    <string name="color_black_select">Color black select</string>
+    <string name="color_grey_select">Color grey select</string>
+    <string name="color_red_select">Color red select\n</string>
+    <string name="color_blue_select">Color blue select</string>
+    <string name="color_aqua_select">Color aqua select</string>
+    <string name="color_white_select">Color white select</string>
+    <string name="color_skin_select" >Color skin select</string>
+    <string name="color_brown_select">Color brown select</string>
+    <string name="color_purple_select">Color purple select</string>
+    <string name="color_random_select">Color random select</string>
 </resources>
