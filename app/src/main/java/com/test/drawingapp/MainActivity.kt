@@ -55,6 +55,8 @@ class MainActivity : AppCompatActivity() {
         if(result.resultCode == RESULT_OK && result.data != null){
             val imgBg: ImageView = findViewById(R.id.iv_background)
             imgBg.setImageURI(result.data?.data)
+//            after setting image as background, canvas is cleared
+            drawingView?.onClearAll()
         }
 
     }
@@ -183,6 +185,10 @@ class MainActivity : AppCompatActivity() {
 
     fun redo(view: View) {
         drawingView?.onRedo()
+    }
+
+    fun clearAll(view: View){
+        drawingView?.onClearAll()
     }
 
 }

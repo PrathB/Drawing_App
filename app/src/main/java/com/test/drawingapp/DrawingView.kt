@@ -146,6 +146,17 @@ class DrawingView(context :Context , attrs :AttributeSet) : View(context,attrs) 
         }
     }
 
+//    this fxn will clear canvas by clearing both mPaths and undoPaths array
+    fun onClearAll(){
+        if(mPaths.size>0){
+            mPaths.clear()
+        }
+        if(undoPaths.size>0){
+            undoPaths.clear()
+        }
+        invalidate()
+    }
+
 //    this class allows to choose a custom color and brush thickness for brush path
     internal inner class CustomPath (var color : Int , var brushThickness : Float) : Path() {
 
