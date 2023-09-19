@@ -7,18 +7,30 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.test.drawingapp.DrawingView
-        android:id="@+id/drawing_view"
+    <FrameLayout
+        android:id="@+id/fl_canvas"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/canvas_bg"
         android:layout_margin="4dp"
+        android:background="@drawable/canvas_bg"
         app:layout_constraintBottom_toTopOf="@id/ll_color_selector"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </com.test.drawingapp.DrawingView>
+        <ImageView
+            android:id="@+id/iv_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/image_imported" />
+
+        <com.test.drawingapp.DrawingView
+            android:id="@+id/drawing_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#50FFFFFF"/>
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/ll_color_selector"
@@ -26,8 +38,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/drawing_view"
-        app:layout_constraintBottom_toTopOf="@id/ib_brush"
+        app:layout_constraintTop_toBottomOf="@id/fl_canvas"
+        app:layout_constraintBottom_toTopOf="@id/ll_action_btns"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -127,18 +139,56 @@
 
     </LinearLayout>
     
-    <ImageButton
-        android:id="@+id/ib_brush"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="5dp"
-        android:src="@drawable/ic_brush"
-        android:scaleType="fitXY"
-        android:backgroundTint="#e5e5e5"
+    <LinearLayout
+        android:id="@+id/ll_action_btns"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ll_color_selector"
-        android:contentDescription="@string/brush_selector_icon" />
+        >
+        <ImageButton
+            android:id="@+id/ib_gallery"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_gallery"
+            android:scaleType="fitXY"
+            android:backgroundTint="#e5e5e5"
+            android:contentDescription="@string/import_image_button"
+            android:onClick="importFromGallery"/>
+        <ImageButton
+            android:id="@+id/ib_brush"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_brush"
+            android:scaleType="fitXY"
+            android:backgroundTint="#e5e5e5"
+            android:contentDescription="@string/brush_selector_icon" />
+        <ImageButton
+            android:id="@+id/ib_redo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_redo"
+            android:scaleType="fitXY"
+            android:backgroundTint="#e5e5e5"
+            android:contentDescription="@string/redo_button"
+            android:onClick="redo"/>
+        <ImageButton
+            android:id="@+id/ib_undo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_undo"
+            android:scaleType="fitXY"
+            android:backgroundTint="#e5e5e5"
+            android:contentDescription="@string/undo_button"
+            android:onClick="undo"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

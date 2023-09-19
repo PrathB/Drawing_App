@@ -1,12 +1,20 @@
 package com.test.drawingapp
 
+import android.Manifest
+import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.view.get
 import kotlin.random.Random
 
@@ -14,6 +22,42 @@ class MainActivity : AppCompatActivity() {
     private var drawingView: DrawingView? = null
 //    this variable stores the current selected color button
     private var selectedColorBtn : ImageButton? = null
+
+//    this variable will launch the permission pop up
+    private val requestPermission =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){
+            permissions ->
+            permissions.entries.forEach(){
+                val permissionName= it.key
+                val isGranted = it.value
+                // TODO : ADD other permissions
+//            if permission is granted, toast is displayed
+                if(isGranted){
+                    Toast.makeText(this,"Permission Read External Storage granted",
+                        Toast.LENGTH_SHORT).show()
+
+                    val pickIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+//                    gallery is opened with given intent
+                    openGalleryLauncher.launch(pickIntent)
+
+                }
+//            if permission is not granted, toast is displayed
+                else{
+                    Toast.makeText(this,"Permission Read External Storage denied",
+                        Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        }
+//    this variable will open gallery and set selected image as background
+    private val openGalleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        result ->
+        if(result.resultCode == RESULT_OK && result.data != null){
+            val imgBg: ImageView = findViewById(R.id.iv_background)
+            imgBg.setImageURI(result.data?.data)
+        }
+
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -70,6 +114,7 @@ class MainActivity : AppCompatActivity() {
         brushDialog.show()
     }
 
+//    this fxn sets the selected color btn as brush color
     fun selectColor(view: View){
         if(view !== selectedColorBtn){
             val imgbtn = view as ImageButton
@@ -85,6 +130,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+//    this fxn generates a random color and sets it as brush color
     fun randomColor(view: View){
         val rnd : Random = Random.Default
         val rndColor= Color.argb(255,rnd.nextInt(256),rnd.nextInt(256),rnd.nextInt(256))
@@ -107,5 +153,36 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    fun importFromGallery(view: View){
+//        if a permission is already denied ,show alert dialog displaying why app needs permission
+        if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.READ_EXTERNAL_STORAGE)){
+            showRationaleDialog("Drawing App",
+                "This app requires access to read your External Storage")
+        }
+//        if permission is not set up, open permission pop up
+        else{
+            requestPermission.launch(arrayOf
+                (Manifest.permission.READ_EXTERNAL_STORAGE)
+                // TODO : ADD other permissions
+            )
+        }
+
+    }
+
+//    this shows an alert dialog stating why app needs a certain permission
+    private fun showRationaleDialog(title: String, message: String){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(title).setMessage(message).setPositiveButton("Cancel"){dialog,_->dialog.dismiss()}
+        builder.create().show()
+    }
+
+
+    fun undo(view: View) {
+        drawingView?.onUndo()
+    }
+
+    fun redo(view: View) {
+        drawingView?.onRedo()
+    }
 
 }

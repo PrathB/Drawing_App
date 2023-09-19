@@ -29,6 +29,9 @@ class DrawingView(context :Context , attrs :AttributeSet) : View(context,attrs) 
 
 //    mPaths stores all traced paths so that previous paths don't disappear on lifting finger from screen
     private val mPaths = ArrayList<CustomPath>()
+//    this will contain all the undo paths
+    private val undoPaths = ArrayList<CustomPath>()
+
 
     init{
         setUpDrawing()
@@ -124,6 +127,25 @@ class DrawingView(context :Context , attrs :AttributeSet) : View(context,attrs) 
         color = Color.parseColor(newColor)
         mdrawPaint!!.color = color
     }
+
+    fun onUndo(){
+        if(mPaths.size>0){
+//            adding last CustomPath from mPaths to undoPaths
+            undoPaths.add(mPaths.removeAt(mPaths.size - 1))
+//            invalidate will call onDraw fxn again
+            invalidate()
+        }
+    }
+
+    fun onRedo(){
+        if(undoPaths.size>0){
+//            adding last CustomPath from undoPaths to mPaths
+            mPaths.add((undoPaths.removeAt(undoPaths.size - 1)))
+//            invalidate will call onDraw fxn again
+            invalidate()
+        }
+    }
+
 //    this class allows to choose a custom color and brush thickness for brush path
     internal inner class CustomPath (var color : Int , var brushThickness : Float) : Path() {
 
