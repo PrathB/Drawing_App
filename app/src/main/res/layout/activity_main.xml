@@ -151,20 +151,31 @@
         app:layout_constraintTop_toBottomOf="@id/ll_color_selector"
         >
         <ImageButton
+            android:id="@+id/ib_save"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="3.5dp"
+            android:src="@drawable/ic_save"
+            android:scaleType="fitXY"
+            android:backgroundTint="#e5e5e5"
+            android:contentDescription="@string/save_button"
+            android:onClick="storagePermissionsWrite"/>
+
+        <ImageButton
             android:id="@+id/ib_gallery"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_margin="5dp"
+            android:layout_margin="3.5dp"
             android:src="@drawable/ic_gallery"
             android:scaleType="fitCenter"
             android:backgroundTint="#e5e5e5"
             android:contentDescription="@string/import_image_button"
-            android:onClick="importFromGallery"/>
+            android:onClick="storagePermissionsRead"/>
         <ImageButton
             android:id="@+id/ib_brush"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_margin="5dp"
+            android:layout_margin="3.5dp"
             android:src="@drawable/ic_brush"
             android:scaleType="fitCenter"
             android:backgroundTint="#e5e5e5"
@@ -173,7 +184,7 @@
             android:id="@+id/ib_redo"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_margin="5dp"
+            android:layout_margin="3.5dp"
             android:src="@drawable/ic_redo"
             android:scaleType="fitCenter"
             android:backgroundTint="#e5e5e5"
@@ -183,7 +194,7 @@
             android:id="@+id/ib_undo"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_margin="5dp"
+            android:layout_margin="3.5dp"
             android:src="@drawable/ic_undo"
             android:scaleType="fitCenter"
             android:backgroundTint="#e5e5e5"
@@ -193,7 +204,7 @@
             android:id="@+id/ib_clear_all"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_margin="5dp"
+            android:layout_margin="3.5dp"
             android:src="@drawable/ic_clear_all"
             android:scaleType="fitCenter"
             android:backgroundTint="#e5e5e5"

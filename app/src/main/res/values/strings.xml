@@ -24,4 +24,6 @@
     <string name="redo_button">Redo button</string>
     <string name="undo_button">Undo button</string>
     <string name="clear_all_button">Clear all button</string>
+    <string name="save_button">Save button\n</string>
+    <string name="please_wait">Please Wait…</string>
 </resources>
